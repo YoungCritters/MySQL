@@ -1,0 +1,88 @@
+CREATE DATABASE eBook;
+USE eBook;
+
+-- Normalization The Table
+-- Table: Author
+ 
+CREATE TABLE Author (
+    author_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    country VARCHAR(100)
+);
+
+-- Table: Book
+CREATE TABLE Book (
+    book_id INT PRIMARY KEY,      -- lastentry + 1 
+    title VARCHAR(200),
+    author_id INT,
+    published_year INT,
+    genre VARCHAR(100),
+    FOREIGN KEY (author_id) REFERENCES Author(author_id)
+);
+
+-- Table: Adaptation
+CREATE TABLE Adaptation (
+    adaptation_id INT PRIMARY KEY,
+    book_id INT,
+    adaptation_type VARCHAR(50), -- e.g. 'Movie', 'TV Series'
+    release_year INT,
+    director VARCHAR(100),
+    FOREIGN KEY (book_id) REFERENCES Book(book_id)
+);
+
+-- Table: BookReview
+CREATE TABLE BookReview (
+    review_id INT PRIMARY KEY,
+    book_id INT,
+    reviewer_name VARCHAR(100),
+    rating INT CHECK(rating BETWEEN 1 AND 5),
+    review_text TEXT,
+    FOREIGN KEY (book_id) REFERENCES Book(book_id)
+); 
+
+
+-- SYntax :
+-- INSERT INTO <TABLENAME> VALUES (.....records.....);
+
+INSERT INTO Author VALUES
+(1, 'George Orwell', 'United Kingdom'),
+(2, 'J.K. Rowling', 'United Kingdom'),
+(3, 'Harper Lee', 'United States'),
+(4, 'F. Scott Fitzgerald', 'United States'),
+(5, 'Jane Austen', 'United Kingdom')
+(6, 'Priyanka' , null);
+
+
+-- Book
+INSERT INTO Book VALUES
+(1, '1984', 1, 1949, 'Dystopian'),
+(2, 'Harry Potter and the Sorcerers Stone', 2, 1997, 'Fantasy'),
+(3, 'To Kill a Mockingbird', 3, 1960, 'Classic'),
+(4, 'The Great Gatsby', 4, 1925, 'Classic'),
+(5, 'Pride and Prejudice', 5, 1813, 'Romance'),
+(6, 'Harry Potter and the Chamber of Secrets', 2, 1998, 'Fantasy'),     -- Website: NAme of Book, Author, year , category
+(7, 'Home Schooling ', 6, 2025, 'Kids');
+
+-- Adaptation
+INSERT INTO Adaptation VALUES
+(1, 1, 'Movie', 1984, 'Michael Radford'),
+(2, 2, 'Movie', 2001, 'Chris Columbus'),
+(3, 3, 'Movie', 1962, 'Robert Mulligan'),
+(4, 4, 'Movie', 2013, 'Baz Luhrmann'),
+(5, 5, 'TV Series', 1995, 'Simon Langton');
+
+-- BookReview
+INSERT INTO BookReview VALUES
+(1, 1, 'Alice', 5, 'Profound and chilling.'),
+(2, 2, 'Bob', 4, 'Magical and immersive.'),
+(3, 3, 'Charlie', 5, 'Timeless themes of justice.'),
+(4, 4, 'Dana', 4, 'Great prose and symbolism.'),
+(5, 5, 'Eli', 3, 'Classic, but a bit slow for me.'),
+(6, 6, 'Frank', 4, 'Even better than the first!');
+
+
+--Syntax for updating any Tanble in the database:
+-- UPDATE <TABLENAME> SET <COLUMNNAME> & WHERE CONDITION;
+
+UPDATE AUTHOR SET country = 'United Kingdom';     -- All records
+UPDATE AUTHOR SET country = 'United States' WHERE author_id IN (6);   -- Specific Records
