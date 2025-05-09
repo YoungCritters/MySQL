@@ -221,3 +221,49 @@ INSERT INTO Orders VALUES (27, 22, 4, 15, '2020-05-26', 1, 562.01, 'Cancelled');
 INSERT INTO Orders VALUES (28, 17, 15, 20, '2022-11-28', 7, 6284.25, 'Shipped');
 INSERT INTO Orders VALUES (29, 24, 11, 5, '2022-07-02', 6, 2464.5, 'Delivered');
 INSERT INTO Orders VALUES (30, 30, 14, 12, '2021-01-26', 10, 8881.6, 'Cancelled');
+
+
+
+-- Add 'city' column to Employee table
+ALTER TABLE Employee ADD COLUMN city VARCHAR(100);
+
+-- Add 'city' column to Customer table
+ALTER TABLE Customer ADD COLUMN city VARCHAR(100);
+
+-- Update Employee table with city values
+UPDATE Employee SET city = 'New York' WHERE employee_id = 1;
+UPDATE Employee SET city = 'Los Angeles' WHERE employee_id = 2;
+UPDATE Employee SET city = 'Chicago' WHERE employee_id = 3;
+UPDATE Employee SET city = 'Houston' WHERE employee_id = 4;
+UPDATE Employee SET city = 'Phoenix' WHERE employee_id = 5;
+-- ... continue up to employee_id = 30 with varied cities
+
+-- Update Customer table with city values
+UPDATE Customer SET city = 'Dallas' WHERE customer_id = 1;
+UPDATE Customer SET city = 'San Diego' WHERE customer_id = 2;
+UPDATE Customer SET city = 'San Jose' WHERE customer_id = 3;
+UPDATE Customer SET city = 'Austin' WHERE customer_id = 4;
+UPDATE Customer SET city = 'Jacksonville' WHERE customer_id = 5;
+-- ... continue up to customer_id = 30 with varied cities
+
+
+UPDATE Employee
+SET city = 
+    CASE 
+        WHEN employee_id % 5 = 1 THEN 'New York'
+        WHEN employee_id % 5 = 2 THEN 'Los Angeles'
+        WHEN employee_id % 5 = 3 THEN 'Chicago'
+        WHEN employee_id % 5 = 4 THEN 'Houston'
+        ELSE 'Phoenix'
+    END;
+
+-- Update Customer table
+UPDATE Customer
+SET city = 
+    CASE 
+        WHEN customer_id % 5 = 1 THEN 'New York'
+        WHEN customer_id % 5 = 2 THEN 'Los Angeles'
+        WHEN customer_id % 5 = 3 THEN 'Chicago'
+        WHEN customer_id % 5 = 4 THEN 'Houston'
+        ELSE 'Phoenix'
+    END;
